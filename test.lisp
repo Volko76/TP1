@@ -1,21 +1,3 @@
-(defun reverseA (arg1 arg2 arg3)
-    (format t "~a  ~a ~a" arg3 arg2 arg1))
-  
-(defun reverseB (&rest args)
-    (reverse args))
-
-(defun reverseC (&rest args)
-    (reverse args))
-
-(defun double (L)
-    (loop for i from 1 to 15 do     ;On fait un boucle qui fait monter la variable i de 1 à 15
-        (if (atom (nth i L))        ;On regarde si l'objet à l'index i est un atom
-            ()                      ;Si oui
-            ())))                   ;Si non
-
-
-
-NEW 
 ;(defun Transfo (L) (list (cadr L)(car L)(caddr L)))
 ;(write(Transfo ((n + 2) / (n - 3))))
 
@@ -59,12 +41,21 @@ NEW
         (write "PERDU")))           ;Sinon ecrire PERDU
 
 (defun grouper (L1 L2)
-    (setq newList (append L1 L2))
-    (loop for i from 0 to (- (list-length newList) 1) do
-        (write '((nth i newList)(nth ++i newList)))))
+    (setq newList (append L1 L2))       ;On regroupe les deux listes
+    (setq newList2 ())                  ;On créer une liste vide qui va se remplir avec la liste modifiée mais inversée
+    (loop for i from 0 to (- (list-length newList) 1) by 2 do   ;Boucle for avec une incrémentation de 2
+        (push (list (nth i newList) (nth (+ i 1) newList)) newList2))   ;On ajoute à newListe2 une miniliste composée de l'élément d'indice i et i+1
+    (setq newList (reverse newList2))       ;La liste étant inversée, on la remet dans le bon sens et on réutilise pour cela la liste newList pour des raisons de lisibilité et d'optimisation de mémoire
+    (write newList))    ;On l'écrit dans la console pour débugguer
+
+
+(defun palindrome (L)
+  (equal L (reverseC L)))
+
 ;(reverseA 1 2 3)
 ;(reverseB '(1))
 ;(reverseC '( a b (c d) e f))
 ;(double '((1 2) 3 (4 5) 6))
 ;(nombres3 '(1 A 3 A B C))
-(grouper '(1 2 3) '(4 5 6))
+;(grouper '(1 2 3) '(4 5 6))
+(write (palindrome '(x a m a x)) )
