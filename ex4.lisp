@@ -91,34 +91,35 @@
   ;et le résident le plus récent. On s’attachera à proposer une solution à la fois la plus élégante et la plus
   ;efficace possible.
   (defun doyen_benjamin(cimetiere)
-    (setq oldest NIL)
-    (setq youngest NIL)
+    (setq oldest (tombe_an_inhum (car (cimetiere_tombes mon_cimetiereB)))) ;On prend la premiere tombe comme reference pour éviter de comparer à un nil apres
+    (setq youngest oldest)  ;Idem pour youngest
     (dolist (tombe (cimetiere_tombes cimetiere))  ;On parcourt toutes les tombes
       (if (< (tombe_an_inhum tombe) oldest) ;Si la tombe courante est plus vielle que oldest (que son année d'inhumation est plus petite)
-        (setq oldest tombe) ;On la définit comme la tombe la plus vielle pour l'instant
+        (setq oldest (tombe_an_inhum tombe)) ;On la définit comme la tombe la plus vielle pour l'instant
       )
       (if (> (tombe_an_inhum tombe) youngest) ;Si la tombe courante est plus jeune que youngest (que son année d'inhumation est plus grande)
-        (setq youngest tombe);On la définit comme la tombe la plus jeune pour l'instant
+        (setq youngest (tombe_an_inhum tombe));On la définit comme la tombe la plus jeune pour l'instant
       )
-    (oldest youngest)   ;On renvoie la plus vielle et la plus récente
+    
+    )(list oldest youngest)   ;On renvoie la plus vielle et la plus récente
   )
   ;============================================
   ; Tests
 
-  (setq tombe1 (make_tombes "Bécoud" 2001 45 17 2000 30))
-  (setq tombe2 (make_tombes "Grappelli" 1997 85 23 1997 5))
-  (setq tombe3 (make_tombes "Desproges" 1988 11 6 1988 30))
-  (setq tombe4 (make_tombes "Morrison" 1971 6 12 1971 30))
-  (setq tombe5 (make_tombes "Mouloudji" 1994 42 9 1990 15))
-  (setq tombe6 (make_tombes "Nohain" 1981 89 9 1979 15))
-  (setq mon_cimetiereB (make_cimetiere "CimetiereB" (list tombe1 tombe2 tombe3 tombe4 tombe5 tombe6)))
+  (setq tombe1 (make-tombes :nom "Bécoud" :an_inhum 2001 :rangee 45 :num 17 :debut_loc 2000 :durée_loc 30))
+  (setq tombe2 (make-tombes :nom "Grappelli" :an_inhum 1997 :rangee 85 :num 23 :debut_loc 1997 :durée_loc 5))
+  (setq tombe3 (make-tombes :nom "Desproges" :an_inhum 1988 :rangee 11 :num 6 :debut_loc 1988 :durée_loc 30))
+  (setq tombe4 (make-tombes :nom "Morrison" :an_inhum 1971 :rangee 6 :num 12 :debut_loc 1971 :durée_loc 30))
+  (setq tombe5 (make-tombes :nom "Mouloudji" :an_inhum 1994 :rangee 6 :num 9 :debut_loc 1990 :durée_loc 15))
+  (setq tombe6 (make-tombes :nom "Nohain" :an_inhum 1981 :rangee 89 :num 9 :debut_loc 1979 :durée_loc 15))
+  (setq mon_cimetiereB (make-cimetiere :nom "CimetiereB" :tombe_list (list tombe1 tombe2 tombe3 tombe4 tombe5 tombe6)))
   ;(write (cimetiere_nom mon_cimetiereB))
   ;(write (tombe_nom (nth 1 (cimetiere_tombes mon_cimetiereB))))
   ;(print "\n")
-  ;(write (qui_est_la mon_cimetiereB 55 23))
-  ;(write (predicat_prevoyant (nth 2 (cimetiere_tombes mon_cimetiereB))))
+  ;(write (qui_est_la mon_cimetiereB 23 85))
+  ;(write (predicat_prevoyant tombe1))
   ;(print "\n Nombre de prévoyants :")
   ;(write (nb_prevoyants mon_cimetiereB))
   ;(print "\n")
-  ;(write (annuaire mon_cimetiereB 9))
-
+  ;(write (annuaire mon_cimetiereB 6))
+  ;(write (doyen_benjamin mon_cimetiereB))
