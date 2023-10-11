@@ -91,14 +91,14 @@
   ;et le résident le plus récent. On s’attachera à proposer une solution à la fois la plus élégante et la plus
   ;efficace possible.
   (defun doyen_benjamin(cimetiere)
-    (setq oldest (tombe_an_inhum (car (cimetiere_tombes mon_cimetiereB)))) ;On prend la premiere tombe comme reference pour éviter de comparer à un nil apres
+    (setq oldest (car (cimetiere_tombes mon_cimetiereB))) ;On prend la premiere tombe comme reference pour éviter de comparer à un nil apres
     (setq youngest oldest)  ;Idem pour youngest
     (dolist (tombe (cimetiere_tombes cimetiere))  ;On parcourt toutes les tombes
-      (if (< (tombe_an_inhum tombe) oldest) ;Si la tombe courante est plus vielle que oldest (que son année d'inhumation est plus petite)
-        (setq oldest (tombe_an_inhum tombe)) ;On la définit comme la tombe la plus vielle pour l'instant
+      (if (< (tombe_an_inhum tombe) (tombe_an_inhum oldest)) ;Si la tombe courante est plus vielle que oldest (que son année d'inhumation est plus petite)
+        (setq oldest tombe) ;On la définit comme la tombe la plus vielle pour l'instant
       )
-      (if (> (tombe_an_inhum tombe) youngest) ;Si la tombe courante est plus jeune que youngest (que son année d'inhumation est plus grande)
-        (setq youngest (tombe_an_inhum tombe));On la définit comme la tombe la plus jeune pour l'instant
+      (if (> (tombe_an_inhum tombe) (tombe_an_inhum youngest)) ;Si la tombe courante est plus jeune que youngest (que son année d'inhumation est plus grande)
+        (setq youngest tombe);On la définit comme la tombe la plus jeune pour l'instant
       )
     
     )(list oldest youngest)   ;On renvoie la plus vielle et la plus récente
